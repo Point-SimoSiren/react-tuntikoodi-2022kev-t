@@ -4,7 +4,8 @@ import React, {useState, useEffect} from 'react'
 const Posts = () => {
 
   // Posts komponetin tila eli state
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState("loading")
+  const [showPosts, setShowPosts] = useState(false)
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
@@ -16,10 +17,12 @@ const Posts = () => {
 
   return (
    <>
-   <h2>Posts from Typicode</h2>
+   <h2 onClick={() => setShowPosts(!showPosts)}>
+     {showPosts ? "Hide Posts from Typicode" : "Show typicode posts"}
+     </h2>
 
-   {posts && posts.map(p => (
-      <div key={p.id}>
+   {posts && showPosts && posts.map(p => (
+      <div key={p.id} className='posts'>
         <h3>{p.title}</h3>
         <p>Author: {p.userId}</p>
         <p>{p.body}</p>
